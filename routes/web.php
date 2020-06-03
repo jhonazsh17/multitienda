@@ -18,3 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/negocio/{idBusiness}', 'BusinessController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/vue', function(){
+    return view('vue-prueba');
+});
