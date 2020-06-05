@@ -214,6 +214,11 @@
                     </div>
                 </div>
                 <div class="row">
+
+                    <div>
+                        <!-- Component Card Item Product-->
+                        <product-item-component></product-item-component>
+                    </div> 
                 
                     <div class="col-md-4 col-card " v-for="product in products">
                         <div  class="card card-product"  style="margin-bottom: 1em">
@@ -290,6 +295,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <script>
         //instancia de vue
