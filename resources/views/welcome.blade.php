@@ -79,7 +79,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Jhon Felipe Medina Zapata
+                    Edwin Oviedo Mal Daña
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Action</a>
@@ -96,7 +96,65 @@
     
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 " style="padding: 0; position: fixed; z-index: 2; ">
+            <div class="col-9" v-if="stateBuy==true" style="border-right: 1px solid #ddd;padding-top: .9em; ">
+                <h3>Realizar Compra</h3>
+                <p>
+                    Los precios de esta compra estan sujetos a IGV, y son variables de acuerdo al vendedor.
+                </p>
+                <div style="margin-top: 1em">
+                    
+                    <ul class="list-group">
+                      <li class="list-group-item" v-for="(product, index) in productsInCart">
+                          
+                            <div class="media">
+                              <img v-bind:src="'{{asset('')}}'+product.image" class="mr-3" alt="..." width="128px">
+                              <div class="media-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h5 class="mt-0">@{{product.productName}}</h5>
+                                        
+                                        <p>
+                                            Precio: <b>S/. @{{product.unitPrice}}</b>
+                                        </p>
+                                        <small>@{{product.owner}}</small>
+                                    </div>
+                                    <div class="col-2  text-center">
+                                        <h6>Cantidad:</h6>
+                                        <p style="padding-top: 2em">
+                                            <input type="number" class="form-control" v-model="product.quantity" @keyup="totalCartPay(product.unitPrice, product.quantity)">
+                                        </p>
+                                    </div>
+                                    <div class="col-2 text-center">
+                                        <h6>Total:</h6>
+                                        <p style="padding-top: 1.5em">
+                                            <h5>S/. @{{(product.quantity * product.unitPrice).toFixed(2)}}</h5>
+                                        </p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+
+                      </li>
+                      
+                    </ul>
+                    <br>
+                    <div class="text-right">
+                        <small>Total a Pagar:</small><br>
+                        <b style="font-size: 2em">S/. @{{totalPay.toFixed(2)}}</b>
+                    </div>    
+                    <br>
+
+                    <div>
+                        
+                        <button type="button" class="btn btn-light"><b>Añadir Medio de Pago</b></button>
+                        <button type="button" class="btn btn-warning"><b>Pagar</b></button>
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <div v-if="stateBuy==false" class="col-3 " style="padding: 0; position: fixed; z-index: 2; ">
                 <h5 style="padding: 15px; margin:0;">
                 <i class="fa fa-shopping-cart"></i> &nbsp; Mi Carrito (@{{productsInCart.length}})
                 </h5>
@@ -183,7 +241,7 @@
                             </div>
 
                             <div style="margin-top: 12px; ">
-                                <button class="btn btn-warning btn-block"><b>Realizar Compra</b></button>
+                                <button class="btn btn-warning btn-block" @click="buyPrev()"><b>Realizar Compra</b></button>
                             </div>
                         </div>
                     </div>
@@ -199,7 +257,7 @@
 
                     
             </div>
-            <div class="col-md-6" style="padding-top: .9em; padding-left: 1.4em; padding-right: 1.4em; border-left: 1px solid #ddd; border-right: 1px solid #ddd; right:-337px">
+            <div class="col-md-6" v-if="stateBuy==false" style="padding-top: .9em; padding-left: 1.4em; padding-right: 1.4em; border-left: 1px solid #ddd; border-right: 1px solid #ddd; right:-337px">
                 <div class="row">
                     <div class="col-md-3 col-card">
                         <div class="form-group">
@@ -214,11 +272,6 @@
                     </div>
                 </div>
                 <div class="row">
-
-                    <div>
-                        <!-- Component Card Item Product-->
-                        <product-item-component></product-item-component>
-                    </div> 
                 
                     <div class="col-md-4 col-card " v-for="product in products">
                         <div  class="card card-product"  style="margin-bottom: 1em">
@@ -243,6 +296,7 @@
                    
                 </div>
             </div>
+
             <div class="col-md-3 card-col" style="padding: 0px; position: fixed; z-index: 10; right:0px">
                 <div v-if="stateDetail">
                     <h5 style="padding: 15px; margin:0;">
@@ -277,8 +331,12 @@
                                 <b>
                                     @{{negocio.nombre}}
                                 </b><br>
-                                <small><i class="fa fa-map-marker"></i>&nbsp; Ubicación: @{{negocio.location}}</small>
+                                <small><i class="fa fa-map-marker"></i>&nbsp; Ubicación: @{{negocio.location}}</small><br>
+                                <small>
+                                (400) Productos en exhibición.
+                                </small>
                             </a>
+                            
                         </div>
                     </div>
                 </div> 
@@ -295,7 +353,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+   <!--  <script src="{{ asset('js/app.js') }}"></script> -->
 
     <script>
         //instancia de vue
@@ -408,7 +466,7 @@
                 stateProductsInCart: false,
                 totalPay: 0,
                 stateDetail: false,
-
+                stateBuy: false,
             },
 
             created: function(){
@@ -419,7 +477,7 @@
                     this.stateProductsInCart = true;
                     this.statePreAddInCart = false;
                     this.validateIfExistProductInCart(product);                   
-                   // this.totalCartPay(product.unitPrice, product.quantity);
+                    this.totalCartPay(product.unitPrice, product.quantity);
                     
                 },
                 preAddCart: function(product){
@@ -507,6 +565,10 @@
                     }
 
                     this.quantity = 0 ;
+                },
+
+                buyPrev: function(){   
+                    this.stateBuy = true;
                 }
                
             },
