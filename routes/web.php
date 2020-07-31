@@ -23,6 +23,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/vue', function(){
-    return view('vue-prueba');
+Route::get('/multistore', function(){
+    return view('multistore');
 });
