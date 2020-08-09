@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('content-products-item', require('./components/content_products_item.vue').default);
+Vue.component('select-places', require('./components/select_places.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

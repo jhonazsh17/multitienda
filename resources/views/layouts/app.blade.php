@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/owner-styles.css') }}">
 </head>
 <body>
-    <div id="app" >
+    <div >
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#ff3838 !important; position: fixed; width:100%; z-index:100">
             <a class="navbar-brand" href="#"><b>Máncora Compra</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +59,6 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
+    
 </body>
 </html>

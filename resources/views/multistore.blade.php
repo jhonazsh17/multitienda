@@ -4,7 +4,7 @@
     <!-- Product Item -->
     <!-- <product-item-component></product-item-component> -->
     <!-- End Producto Item -->
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <div class="row">
             
 
@@ -58,10 +58,7 @@
                 <div class="row">
                     <div class="col-md-3 col-card">
                         <div class="form-group">
-                            <!-- <select class="form-control" id="exampleFormControlSelect1" style="background-color: #eee">
-                                <option selected disabled>Elegir lugar</option>
-                                <option v-for="lugar in lugares"></option>
-                            </select> -->
+                            <select-places></select-places>
                         </div>
                     </div> 
                     <div class="col-md-9 col-card" style="margin-bottom: 15px">
