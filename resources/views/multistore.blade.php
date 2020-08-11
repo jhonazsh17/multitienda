@@ -9,50 +9,9 @@
             
 
             <div class="col-3 " style="padding: 0; position: fixed; z-index: 2; ">
-                <h5 style="padding: 15px; margin:0;">
-                <i class="fa fa-shopping-cart"></i> &nbsp; Mi Carrito 
-                </h5>
-                
-                
-                <div class="carrito col-scroll" style="padding: 15px; border-top: 1px solid #ddd; overflow-y: auto; height: 515px">
-                    
-                    <div>
-                        <div>
-                            <div class="text-center" style="padding: 10px; color: black; margin-bottom: 10px; background-color: #eee">
-                                <small><b>Este producto esta apunto de ser añadido a tu Carrito de Compras.</b></small>
-                            </div>
-                            
-                            <hr style="margin-top: 10px; margin-bottom: 10px; border: 2px solid #eee">
-                        </div> 
-
-                        <div>
-                            <p>
-                                <small>Usted tiene  Producto<span >s</span> en su carrito de Compras.</small>   
-                            </p>    
-                            <div class="list-group">
-                                
-                            </div>
-
-                            <div style="margin-top: 12px; ">
-                                
-                            </div>
-
-                            <div style="margin-top: 12px; ">
-                                <button class="btn btn-warning btn-block" @click="buyPrev()"><b>Realizar Compra</b></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="padding: 2em">
-                        <p>
-                            Aún no tienes Productos en tu Carrito de Compras.
-                        </p>
-                        <img src="{{asset('img/cart.png')}}" alt="" width="50%"style="opacity: .5">
-                    </div>
-                    
-                </div> 
-
-                    
+                <content-cart
+                    asset-prefix = "{{asset('')}}">
+                </content-cart>                    
             </div>
             <div class="col-md-6" style="padding-top: .9em; padding-left: 1.4em; padding-right: 1.4em; border-left: 1px solid #ddd; border-right: 1px solid #ddd; right:-337px">
                 <div class="row">

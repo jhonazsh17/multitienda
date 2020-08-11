@@ -24,12 +24,16 @@ export default{
 		cancel(){
 			this.$emit('update:quantityState', false);
 		},	
-		/* --- End Method <--- */
+		/* ---- End Method ---- */
 
+		/* => Method: this method add item in cart - use vuex */
 		addToCart(){
-			this.itemCurrent.quantity = this.quantity;
-			console.log('add', this.itemCurrent);
+			this.cancel();
+			this.itemCurrent.quantity = parseInt(this.quantity);
+			this.$store.dispatch('addProductToCart', this.itemCurrent);
+			console.log('carrito', this.$store.getters.getProductsInCartGetters);
 		}	
+		/* ---- End Method --- */
 	}
 }
 </script>
