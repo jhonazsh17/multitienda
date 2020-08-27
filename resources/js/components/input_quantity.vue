@@ -17,7 +17,12 @@ export default{
 	data(){
 		return {
 			quantity: 1,
+			itemsInCart: [],
+			stateAddItem: true,
 		}
+	},
+	created(){
+		this.itemsInCart = this.$store.getters.getItemsInCartGetters;
 	},
 	methods: {
 		/* => Method: this method cancel the action add in cart. */
@@ -30,8 +35,23 @@ export default{
 		addToCart(){
 			this.cancel();
 			this.itemCurrent.quantity = parseInt(this.quantity);
-			this.$store.dispatch('addProductToCart', this.itemCurrent);
-			console.log('carrito', this.$store.getters.getProductsInCartGetters);
+			let quantity = null;			
+			let itemsInCart = this.itemsInCart;
+
+			itemsInCart.forEach( itemInCart => {
+				if(itemInCart.idProduct == this.itemCurrent.idProduct) {
+					this.stateAddItem = false
+					quantity = itemInCart.quantity;
+				}	
+			});
+
+			if(this.stateAddItem){
+				this.$store.dispatch('addItemToCart', this.itemCurrent);
+			} else {
+				this.$store.dispatch('updateQuantityOfItemInCart', this.itemCurrent, quantity);
+			}	
+
+			this.stateAddItem = true;
 		}	
 		/* ---- End Method --- */
 	}

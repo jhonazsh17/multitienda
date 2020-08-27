@@ -20,13 +20,19 @@
                     <div>
                         
                         <table class="table table-bordered">
-                            <tr v-for="(item, index) in itemsInCart"
+                            <tr v-for="(item, index) in itemsInCart.slice().reverse()"
                                 :key="index">
                                 <td>
                                     {{item.quantity}}
                                 </td>
                                 <td>
                                     {{item.productName}}
+                                </td>
+                                <td>
+                                    {{item.unitPrice}}
+                                </td>
+                                <td>
+                                    {{ (item.unitPrice * item.quantity).toFixed(2) }}
                                 </td>
                             </tr>  
                         </table>   
@@ -59,7 +65,7 @@ export default {
         }    
     },
     created(){
-        this.itemsInCart = this.$store.getters.getProductsInCartGetters;
+        this.itemsInCart = this.$store.getters.getItemsInCartGetters;
         console.log(this.itemsInCart);
     }      
 }

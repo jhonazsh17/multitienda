@@ -1959,6 +1959,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['assetPrefix'],
   data: function data() {
@@ -1968,7 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.itemsInCart = this.$store.getters.getProductsInCartGetters;
+    this.itemsInCart = this.$store.getters.getItemsInCartGetters;
     console.log(this.itemsInCart);
   }
 });
@@ -2088,8 +2094,13 @@ __webpack_require__.r(__webpack_exports__);
   props: ['quantityState', 'itemCurrent'],
   data: function data() {
     return {
-      quantity: 1
+      quantity: 1,
+      itemsInCart: [],
+      stateAddItem: true
     };
+  },
+  created: function created() {
+    this.itemsInCart = this.$store.getters.getItemsInCartGetters;
   },
   methods: {
     /* => Method: this method cancel the action add in cart. */
@@ -2101,10 +2112,26 @@ __webpack_require__.r(__webpack_exports__);
 
     /* => Method: this method add item in cart - use vuex */
     addToCart: function addToCart() {
+      var _this = this;
+
       this.cancel();
       this.itemCurrent.quantity = parseInt(this.quantity);
-      this.$store.dispatch('addProductToCart', this.itemCurrent);
-      console.log('carrito', this.$store.getters.getProductsInCartGetters);
+      var quantity = null;
+      var itemsInCart = this.itemsInCart;
+      itemsInCart.forEach(function (itemInCart) {
+        if (itemInCart.idProduct == _this.itemCurrent.idProduct) {
+          _this.stateAddItem = false;
+          quantity = itemInCart.quantity;
+        }
+      });
+
+      if (this.stateAddItem) {
+        this.$store.dispatch('addItemToCart', this.itemCurrent);
+      } else {
+        this.$store.dispatch('updateQuantityOfItemInCart', this.itemCurrent, quantity);
+      }
+
+      this.stateAddItem = true;
     }
     /* ---- End Method --- */
 
@@ -38536,7 +38563,10 @@ var render = function() {
                   _c(
                     "table",
                     { staticClass: "table table-bordered" },
-                    _vm._l(_vm.itemsInCart, function(item, index) {
+                    _vm._l(_vm.itemsInCart.slice().reverse(), function(
+                      item,
+                      index
+                    ) {
                       return _c("tr", { key: index }, [
                         _c("td", [
                           _vm._v(
@@ -38550,6 +38580,24 @@ var render = function() {
                           _vm._v(
                             "\n                                " +
                               _vm._s(item.productName) +
+                              "\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(item.unitPrice) +
+                              "\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(
+                                (item.unitPrice * item.quantity).toFixed(2)
+                              ) +
                               "\n                            "
                           )
                         ])
@@ -52814,24 +52862,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     //states
-    productsInCart: []
+    itemsInCart: [],
+    itemsInCartCopy: []
   },
   getters: {
     //all getters of state
-    getProductsInCartGetters: function getProductsInCartGetters(state) {
-      return state.productsInCart;
+    getItemsInCartGetters: function getItemsInCartGetters(state) {
+      return state.itemsInCart;
     }
   },
   actions: {
     //all actions like a methods
-    addProductToCart: function addProductToCart(context, item) {
-      context.commit("productsInCartCollection", item);
+    addItemToCart: function addItemToCart(context, item) {
+      context.commit("itemsInCartCollection", item);
+      context.commit("itemsInCartCopyCollection", item);
+    },
+    updateQuantityOfItemInCart: function updateQuantityOfItemInCart(context, item, quantity) {
+      context.commit("quantityOfItem", item, quantity);
     }
   },
   mutations: {
     //all mutations for states, like a setters
-    productsInCartCollection: function productsInCartCollection(state, item) {
-      return state.productsInCart.push(item);
+    itemsInCartCollection: function itemsInCartCollection(state, item) {
+      return state.itemsInCart.push(item);
+    },
+    itemsInCartCopyCollection: function itemsInCartCopyCollection(state, item) {
+      return state.itemsInCartCopy.push(item);
+    },
+    quantityOfItem: function quantityOfItem(state, item, quantity) {
+      console.log('tem', state.itemsInCartCopy); // state.itemsInCart.forEach( itemInCart => {
+      //     console.log(itemInCart.quantity);
+      //     // if(itemInCart.idProduct == item.idProduct){
+      //     //     console.log('hola', item.quantity);
+      //     //     console.log('hola', itemInCart.quantity);
+      //     //     let quantityCurrent = itemInCart.quantity; 
+      //     //     let quantityComing = item.quantity;
+      //     //     itemInCart.quantity = quantityCurrent + quantityComing;
+      //     //     console.log(itemInCart);
+      //     // }    
+      // });
     }
   }
 });

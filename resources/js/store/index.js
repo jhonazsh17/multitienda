@@ -1,24 +1,46 @@
 export default{
     state: {
         //states
-        productsInCart: [],
+        itemsInCart: [],
+        itemsInCartCopy: [],
     },
     getters: {
         //all getters of state
-        getProductsInCartGetters(state){
-            return state.productsInCart;
+        getItemsInCartGetters(state){
+            return state.itemsInCart;
         }    
     },
     actions: {
         //all actions like a methods
-        addProductToCart(context, item){
-            context.commit("productsInCartCollection", item);
+        addItemToCart(context, item){
+            context.commit("itemsInCartCollection", item);
+            context.commit("itemsInCartCopyCollection", item);
+        },
+        updateQuantityOfItemInCart(context, item, quantity){
+            context.commit("quantityOfItem", item, quantity);
         }
     },
     mutations: {
         //all mutations for states, like a setters
-        productsInCartCollection(state, item){
-            return state.productsInCart.push(item);
+        itemsInCartCollection(state, item){
+            return state.itemsInCart.push(item);
+        },
+        itemsInCartCopyCollection(state, item){
+            return state.itemsInCartCopy.push(item);
+        },
+        quantityOfItem(state, item, quantity){
+            console.log('tem', state.itemsInCartCopy);
+            // state.itemsInCart.forEach( itemInCart => {
+            //     console.log(itemInCart.quantity);
+            //     // if(itemInCart.idProduct == item.idProduct){
+            //     //     console.log('hola', item.quantity);
+            //     //     console.log('hola', itemInCart.quantity);
+            //     //     let quantityCurrent = itemInCart.quantity; 
+            //     //     let quantityComing = item.quantity;
+            //     //     itemInCart.quantity = quantityCurrent + quantityComing;
+            //     //     console.log(itemInCart);
+            //     // }    
+            // });
         }    
     }
 }
